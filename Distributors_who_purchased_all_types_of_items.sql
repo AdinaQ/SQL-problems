@@ -1,0 +1,32 @@
+CREATE TABLE Items(
+	item_code INT PRIMARY KEY NOT NULL,
+	item_name varchar(255)
+);
+
+INSERT INTO Items VALUES(10091,'juice');
+INSERT INTO Items VALUES(10092,'chocolate');
+INSERT INTO Items VALUES(10093,'cookies');
+INSERT INTO Items VALUES(10094,'cake');
+
+CREATE TABLE Orders(
+	order_id INT PRIMARY KEY NOT NULL,
+	distributor_id INT,
+	item_ordered INT,
+	item_quantity INT
+);
+
+INSERT INTO Orders VALUES(1,501,10091,250);
+INSERT INTO Orders VALUES(2,502,10093,100);
+INSERT INTO Orders VALUES(3,503,10091,200);
+INSERT INTO Orders VALUES(4,502,10091,150);
+INSERT INTO Orders VALUES(5,502,10092,300);
+INSERT INTO Orders VALUES(6,504,10094,200);
+INSERT INTO Orders VALUES(7,503,10093,250);
+INSERT INTO Orders VALUES(8,503,10092,250);
+INSERT INTO Orders VALUES(9,501,10094,180);
+INSERT INTO Orders VALUES(10,503,10094,350);
+
+#Distributors who ordered all items
+SELECT distributor_id FROM Orders 
+GROUP BY distributor_id 
+HAVING COUNT(DISTINCT item_ordered)=(SELECT COUNT(item_code) FROM Items);
